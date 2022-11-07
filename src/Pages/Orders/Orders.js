@@ -6,11 +6,15 @@ const Orders = () => {
 
     const { user } = useContext(AuthContext)
     const [orders, setOrders] = useState([])
-    console.log(user)
+    // console.log(orders)
     // console.log(`http://localhost:5000/orders?email=${user.email}`)
 
     useEffect(() => {
-        fetch(`http://localhost:5000/orders?email=${user?.email}`)
+        fetch(`http://localhost:5000/orders?email=${user?.email}`, {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('geniusToken')}`
+            }
+        })
             .then(res => res.json())
             .then(data => setOrders(data));
     }, [user?.email])
